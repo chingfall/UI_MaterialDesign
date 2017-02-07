@@ -1,11 +1,17 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Material">
+    <style name="AppTheme" parent="android:Theme.Material.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">#999999</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">#777777</item>
+
+        <item name="android:windowContentTransitions">true</item>
+
+        <item name="android:windowEnterTransition">@transition/explode_transition</item>
+        <item name="android:windowExitTransition">@transition/explode_transition</item>
     </style>
 
 </resources>

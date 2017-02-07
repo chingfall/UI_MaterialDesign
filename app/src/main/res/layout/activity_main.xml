@@ -11,19 +11,18 @@
     tools:context="com.nws.ching.ui_materialdesign.MainActivity">
 
     <TextView
-        android:id="@+id/my_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next"
         android:background="@color/white"
         android:elevation="5dp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/my_textview"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="18dp" />
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
 
 </RelativeLayout>

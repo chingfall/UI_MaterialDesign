@@ -1,90 +1,87 @@
 package com.nws.ching.ui_materialdesign;
 
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+public class MainActivity extends Activity {
+    CallbackManager callbackManager;
+    private AccessToken accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //初始化fb Sdk,要放在第一行
+        FacebookSdk.sdkInitialize(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        //宣告callback Manager
+        callbackManager = CallbackManager.Factory.create();
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        //定義login Button
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
 
-        //Data test
-        ArrayList<String> myData = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            myData.add("List" + Integer.toString(i));
-        }
+        //loginButton增加callback function
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                accessToken = loginResult.getAccessToken();
 
-        // specify an adapter (see also next example)
+                Log.d("FB", "access token got.");
 
-        mAdapter = new MyAdapter(myData);
-        mRecyclerView.setAdapter(mAdapter);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+                //send request and call graph api
+                GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        //read user's name, ID, fb page link
+                        Log.d("FB", "complete");
+                        Log.d("FB", object.optString("name"));
+                        Log.d("FB", object.optString("link"));
+                        Log.d("FB", object.optString("id"));
+                    }
+                });
+
+                //package user's information,and send request
+                Bundle parameters = new Bundle();
+                parameters.putString("Fields", "id,name,link");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("FB", "CANCEL");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("FB", error.toString());
+            }
+        });
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Main Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
+    //Let login result return to callback Manager
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data){
+        super.onActivityResult(requestCode, resultCode,data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
+    public void onDestroy(){
+        super.onDestroy();
     }
 }
