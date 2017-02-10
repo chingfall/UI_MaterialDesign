@@ -26,8 +26,12 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="541344e8e0ea4fffdd1c59d3c23fab6f40dc9804" />
     </application>
 
     <user-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
