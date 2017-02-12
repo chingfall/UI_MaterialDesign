@@ -26,16 +26,4 @@ public class MainActivity extends Activity {
         });
     }
 
-   /* //Button Click Listener
-    private Button.OnClickListener SocialMediaListener = new Button.OnClickListener(){
-
-        @Override
-        public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, SocialMediaSDK.class);
-            startActivity(intent);
-            finish();
-        }
-    };*/
 }
