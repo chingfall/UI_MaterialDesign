@@ -10,25 +10,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.nws.ching.ui_materialdesign.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:text="@string/SocialMediaLogin"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:background="@color/white"
-        android:elevation="5dp" />
+        android:id="@+id/SocialMediaSDK"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
+    <Button
+        android:text="@string/MaterialDesign"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
-
-    <com.twitter.sdk.android.core.identity.TwitterLoginButton
-        android:id="@+id/twitter_login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:id="@+id/MeterialDesign"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/SocialMediaSDK"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

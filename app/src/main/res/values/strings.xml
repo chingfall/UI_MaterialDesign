@@ -1,5 +1,28 @@
 <resources>
     <string name="app_name">UI_Material Design</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name="nav_item_home">Home</string>
+    <string name="nav_item_friends">Friends</string>
+    <string name="nav_item_notifications">Message</string>
+
+    <!-- navigation drawer item labels -->
+    <string-array name="nac_drawer_labels">
+        <item>@string/nav_item_home</item>
+        <item>@string/nav_item_friends</item>
+        <item>@string/nav_item_notifications</item>
+    </string-array>
+
+    <!-- Button & Text & ID -->
     <string name="next">next</string>
-    <string name="facebook_app_id">720838888093767</string>>
+    <string name="facebook_app_id">720838888093767</string>
+    <string name="SocialMediaLogin">Social Media Login</string>
+    <string name="MaterialDesign">Material Design</string>
+    <string name="title_messages">Message</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_home">Home</string>
+
 </resources>
